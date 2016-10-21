@@ -6,10 +6,10 @@
 #include "qgsmaplayerregistry.h"
 #include <QAction>
 #include <QList>
+//#include "Qgis_tools.h"
 #include <QFileDialog>
 #include <QFileInfo>
 #include <qgsvectorlayer.h>
-
 using namespace std;
 
 // Static variables for plugin description
@@ -41,6 +41,17 @@ void AgilePlugin::initGui()
    // Adds the action to the menu
    m_GISInterface->addRasterToolBarIcon(m_action);
    m_GISInterface->addPluginToMenu(tr("&Agile Plugin"), m_action);
+
+   mpMapTool = new QgsMapToolEmitPoint( m_GISInterface->mapCanvas() );
+
+   connect(mpMapTool, SIGNAL(canvasClicked(const QgsPoint &, Qt::MouseButton)), this,SLOT(onClicked(const QgsPoint &, Qt::MouseButton)));
+}
+
+void AgilePlugin::onClicked(const QgsPoint &point, Qt::MouseButton button)
+{
+    double x = point.x();
+    double y = point.y();
+QgsMessageLog::instance()->logMessage(QString::number(x)+ " " + QString::number(y), "AgilePlugin", QgsMessageLog::INFO);
 }
 
 void AgilePlugin::run()
@@ -65,30 +76,13 @@ void AgilePlugin::run()
     //QgisInterface::addRasterLayer(files,"Image test");
 
     QgsMessageLog::instance()->logMessage("Agile Plugin launched", "AgilePlugin", QgsMessageLog::INFO);
+    std::cout << "test0";
 
     // Gets the map canvas
     QgsMapCanvas * canvas = m_GISInterface->mapCanvas();
-
+    canvas->setMapTool(mpMapTool);
     // Creates a raster layer
-    QgsRasterLayer * rasterLayer = new QgsRasterLayer("/home/matthieu/Downloads/land_shallow_topo_2048.tif");
-    if (rasterLayer->isValid())
-    {
-        // Registers the layer
-        QgsMapLayerRegistry::instance()->addMapLayer(rasterLayer);
 
-        // Setups the canvas
-        canvas->setExtent(rasterLayer->extent());
-        canvas->enableAntiAliasing(true);
-        canvas->setCanvasColor(QColor(255, 255, 255));
-        canvas->freeze(false);
-
-        // Adds the layer in the canvas
-        QList <QgsMapCanvasLayer> layerSet;
-        layerSet.append(QgsMapCanvasLayer(rasterLayer));
-        canvas->setLayerSet(layerSet);
-        canvas->setVisible(true);
-        canvas->refresh();
-    }
 }
 
 void AgilePlugin::unload()

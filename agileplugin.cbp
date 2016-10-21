@@ -39,7 +39,9 @@
 		<Unit filename="agileplugin.pro" />
 		<Extensions>
 			<code_completion>
-				<search_path add="../../../../../usr/lib" />
+
+				<search_path add="../../../../../../usr/include/qgis" />
+
 			</code_completion>
 			<debugger />
 		</Extensions>
