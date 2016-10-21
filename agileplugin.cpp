@@ -64,11 +64,15 @@ void AgilePlugin::run()
     myRasterFileInfo.completeBaseName());
     QgsMapLayerRegistry::instance()->addMapLayer(mypLayer, TRUE);
     // ajout GPX
-    QString filegpx = QFileDialog::getOpenFileName(nullptr, tr("Ouvrir une trace GPX..."),"/home",tr("Image Files (*.gpx"));
+    QString filegpx = QFileDialog::getOpenFileName(nullptr, tr("Ouvrir une trace GPX..."),"/home",tr("Track (*.gpx)"));
     QFileInfo myVectorFileInfo(filegpx);
-    QgsVectorLayer * myvLayer = new QgsVectorLayer(myVectorFileInfo.filePath(),
-    myVectorFileInfo.completeBaseName());
-    QgsMapLayerRegistry::instance()->addMapLayer(myvLayer, TRUE);
+
+    QgsVectorLayer * myvLayert = new QgsVectorLayer(myVectorFileInfo.filePath()+"?type=track",myVectorFileInfo.completeBaseName(),"gpx");
+    QgsVectorLayer * myvLayerr = new QgsVectorLayer(myVectorFileInfo.filePath()+"?type=route",myVectorFileInfo.completeBaseName(),"gpx");
+    QgsVectorLayer * myvLayerw = new QgsVectorLayer(myVectorFileInfo.filePath()+"?type=waypoint",myVectorFileInfo.completeBaseName(),"gpx");
+    QgsMapLayerRegistry::instance()->addMapLayer(myvLayert, TRUE);
+    QgsMapLayerRegistry::instance()->addMapLayer(myvLayerr, TRUE);
+    QgsMapLayerRegistry::instance()->addMapLayer(myvLayerw, TRUE);
     //QgisInterface::addRasterLayer(files,"Image test");
 
     QgsMessageLog::instance()->logMessage("Agile Plugin launched", "AgilePlugin", QgsMessageLog::INFO);
