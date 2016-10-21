@@ -8,6 +8,7 @@
 #include <QList>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <qgsvectorlayer.h>
 
 using namespace std;
 
@@ -45,13 +46,18 @@ void AgilePlugin::initGui()
 void AgilePlugin::run()
 {
 
-
+    // Ajout de Geotiff
     QString files = QFileDialog::getOpenFileName(nullptr, tr("Ouvrir image Geotiff..."),"/home",tr("Image Files (*.tif *.geotiff)"));
     QFileInfo myRasterFileInfo(files);
     QgsRasterLayer * mypLayer = new QgsRasterLayer(myRasterFileInfo.filePath(),
     myRasterFileInfo.completeBaseName());
     QgsMapLayerRegistry::instance()->addMapLayer(mypLayer, TRUE);
-
+    // ajout GPX
+    QString filegpx = QFileDialog::getOpenFileName(nullptr, tr("Ouvrir une trace GPX..."),"/home",tr("Image Files (*.gpx"));
+    QFileInfo myVectorFileInfo(filegpx);
+    QgsVectorLayer * myvLayer = new QgsVectorLayer(myVectorFileInfo.filePath(),
+    myVectorFileInfo.completeBaseName());
+    QgsMapLayerRegistry::instance()->addMapLayer(myvLayer, TRUE);
     //QgisInterface::addRasterLayer(files,"Image test");
 
     QgsMessageLog::instance()->logMessage("Agile Plugin launched", "AgilePlugin", QgsMessageLog::INFO);
