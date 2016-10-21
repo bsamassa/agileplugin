@@ -33,6 +33,7 @@ public slots:
 
     void onClicked(const QgsPoint &point, Qt::MouseButton button);
     void onDoubleclicked(const QgsPoint &point, Qt::MouseButton button);
+    void DrawOverlay(QPainter* painter);
 
 private:
     QgisInterface * m_GISInterface; // GIS interface

@@ -69,6 +69,12 @@ void AgilePlugin::onClicked(const QgsPoint &point, Qt::MouseButton button)
 
 }
 
+ void AgilePlugin::DrawOverlay(QPainter* painter)
+{
+   std::cout << "HelloWorldPlugin::DrawOverlay" << std::endl;
+   painter->drawRect(20, 20, 60, 60);
+}
+
 void AgilePlugin::run()
 {
 
@@ -95,6 +101,9 @@ void AgilePlugin::run()
 
     // Gets the map canvas
     QgsMapCanvas * canvas = m_GISInterface->mapCanvas();
+    connect(canvas, SIGNAL(renderComplete(QPainter*)),
+      this, SLOT(DrawOverlay(QPainter*)));
+
     canvas->setMapTool(mpMapTool);
     // Creates a raster layer
 
