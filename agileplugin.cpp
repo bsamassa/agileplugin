@@ -6,6 +6,7 @@
 #include "qgsmaplayerregistry.h"
 #include <QAction>
 #include <QList>
+#include "Qgis_tools.h"
 
 // Static variables for plugin description
 static const QString sName = QObject::tr("AgilePlugin");
@@ -36,17 +37,29 @@ void AgilePlugin::initGui()
    // Adds the action to the menu
    m_GISInterface->addRasterToolBarIcon(m_action);
    m_GISInterface->addPluginToMenu(tr("&Agile Plugin"), m_action);
+
+   mpMapTool = new QgsMapToolEmitPoint( m_GISInterface->mapCanvas() );
+
+   connect(mpMapTool, SIGNAL(canvasClicked(const QgsPoint &, Qt::MouseButton)), this,SLOT(onClicked(const QgsPoint &, Qt::MouseButton)));
+}
+
+void AgilePlugin::onClicked(const QgsPoint &point, Qt::MouseButton button)
+{
+    double x = point.x();
+    double y = point.y();
+QgsMessageLog::instance()->logMessage(QString::number(x)+ " " + QString::number(y), "AgilePlugin", QgsMessageLog::INFO);
 }
 
 void AgilePlugin::run()
 {
     QgsMessageLog::instance()->logMessage("Agile Plugin launched", "AgilePlugin", QgsMessageLog::INFO);
+    std::cout << "test0";
 
     // Gets the map canvas
     QgsMapCanvas * canvas = m_GISInterface->mapCanvas();
-
+    canvas->setMapTool(mpMapTool);
     // Creates a raster layer
-    QgsRasterLayer * rasterLayer = new QgsRasterLayer("/home/matthieu/Downloads/land_shallow_topo_2048.tif");
+    QgsRasterLayer * rasterLayer = new QgsRasterLayer("/home/prof/OTB/Examples_QB_Toulouse_Ortho_PAN.tif");
     if (rasterLayer->isValid())
     {
         // Registers the layer

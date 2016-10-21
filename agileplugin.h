@@ -5,6 +5,9 @@
 #include <iostream>
 #include "qgisplugin.h" // Plugin interface
 
+#include "Qgis_tools.h"
+#include "qgsmaptoolemitpoint.h"
+
 // Forward declarations
 class QAction;
 class QgisInterface;
@@ -28,9 +31,13 @@ public slots:
     // Slot called when the plugin is launched
     void run();
 
+    void onClicked(const QgsPoint &point, Qt::MouseButton button);
+
 private:
     QgisInterface * m_GISInterface; // GIS interface
     QAction * m_action; // Action in the menu bar
+
+    QgsMapToolEmitPoint * mpMapTool ;
 };
 
 #endif
