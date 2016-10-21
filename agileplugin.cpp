@@ -45,10 +45,6 @@ void AgilePlugin::initGui()
 void AgilePlugin::run()
 {
 
-    QString nomFichier;
-    QString cheminDuDossier;
-
-    QDir path;
 
     QString files = QFileDialog::getOpenFileName(nullptr, tr("Ouvrir image Geotiff..."),"/home",tr("Image Files (*.tif *.geotiff)"));
     QFileInfo myRasterFileInfo(files);
