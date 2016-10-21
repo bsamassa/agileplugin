@@ -74,6 +74,7 @@ void AgilePlugin::onClicked(const QgsPoint &point, Qt::MouseButton button)
         QgsMessageLog::instance()->logMessage("on cree un point", "AgilePlugin", QgsMessageLog::INFO);
 
         // on creer un point
+        drawpoint(x,y);
         x= -1;
         y= -1;
     }
