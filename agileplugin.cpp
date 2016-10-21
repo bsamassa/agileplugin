@@ -78,25 +78,7 @@ void AgilePlugin::run()
     QgsMapCanvas * canvas = m_GISInterface->mapCanvas();
     canvas->setMapTool(mpMapTool);
     // Creates a raster layer
-    QgsRasterLayer * rasterLayer = new QgsRasterLayer("/home/prof/OTB/Examples_QB_Toulouse_Ortho_PAN.tif");
-    if (rasterLayer->isValid())
-    {
-        // Registers the layer
-        QgsMapLayerRegistry::instance()->addMapLayer(rasterLayer);
 
-        // Setups the canvas
-        canvas->setExtent(rasterLayer->extent());
-        canvas->enableAntiAliasing(true);
-        canvas->setCanvasColor(QColor(255, 255, 255));
-        canvas->freeze(false);
-
-        // Adds the layer in the canvas
-        QList <QgsMapCanvasLayer> layerSet;
-        layerSet.append(QgsMapCanvasLayer(rasterLayer));
-        canvas->setLayerSet(layerSet);
-        canvas->setVisible(true);
-        canvas->refresh();
-    }
 }
 
 void AgilePlugin::unload()
