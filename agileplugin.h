@@ -26,6 +26,7 @@ public:
 
     // Called when the plugin is disabled
     void unload() override;
+    void drawpoint(float,float);
 
 public slots:
     // Slot called when the plugin is launched

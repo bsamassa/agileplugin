@@ -10,6 +10,9 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <qgsvectorlayer.h>
+#include "qgsdataprovider.h"
+#include <qgsgeometry.h>
+#include <qgsvectordataprovider.h>
 using namespace std;
 
 // Static variables for plugin description
@@ -26,6 +29,21 @@ AgilePlugin::AgilePlugin(QgisInterface * interface)
     , m_action(nullptr)
 {
 }
+
+void AgilePlugin::drawpoint(float x,float y) {
+    QString uri = "point?crs=epsg:4326&field=id:integer";
+    QgsVectorLayer * myLayer = new QgsVectorLayer(uri, ".Point",  "memory");
+    QgsVectorDataProvider *pr=myLayer->dataProvider();
+    QgsPoint point=QgsPoint(x,y);
+    QgsFeature Feature;
+    QgsGeometry *qpoint=QgsGeometry::fromPoint(point);
+    Feature.setGeometry(qpoint);
+    QgsFeatureList FeatureList;
+    FeatureList.append(Feature);
+    pr->addFeatures(FeatureList);
+    QgsMapLayerRegistry::instance()->addMapLayer(myLayer, TRUE);
+
+    }
 
 void AgilePlugin::initGui()
 {
@@ -77,6 +95,7 @@ void AgilePlugin::onClicked(const QgsPoint &point, Qt::MouseButton button)
 
 void AgilePlugin::run()
 {
+
 
     // Ajout de Geotiff
     QString files = QFileDialog::getOpenFileName(nullptr, tr("Ouvrir image Geotiff..."),"/home",tr("Image Files (*.tif *.geotiff)"));
