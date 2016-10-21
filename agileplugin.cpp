@@ -6,6 +6,10 @@
 #include "qgsmaplayerregistry.h"
 #include <QAction>
 #include <QList>
+#include <QFileDialog>
+#include <QFileInfo>
+
+using namespace std;
 
 // Static variables for plugin description
 static const QString sName = QObject::tr("AgilePlugin");
@@ -40,6 +44,20 @@ void AgilePlugin::initGui()
 
 void AgilePlugin::run()
 {
+
+    QString nomFichier;
+    QString cheminDuDossier;
+
+    QDir path;
+
+    QString files = QFileDialog::getOpenFileName(nullptr, tr("Ouvrir image Geotiff..."),"/home",tr("Image Files (*.tif *.geotiff)"));
+    QFileInfo myRasterFileInfo(files);
+    QgsRasterLayer * mypLayer = new QgsRasterLayer(myRasterFileInfo.filePath(),
+    myRasterFileInfo.completeBaseName());
+    QgsMapLayerRegistry::instance()->addMapLayer(mypLayer, TRUE);
+
+    //QgisInterface::addRasterLayer(files,"Image test");
+
     QgsMessageLog::instance()->logMessage("Agile Plugin launched", "AgilePlugin", QgsMessageLog::INFO);
 
     // Gets the map canvas
