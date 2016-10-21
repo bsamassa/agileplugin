@@ -32,12 +32,15 @@ public slots:
     void run();
 
     void onClicked(const QgsPoint &point, Qt::MouseButton button);
+    void onDoubleclicked(const QgsPoint &point, Qt::MouseButton button);
 
 private:
     QgisInterface * m_GISInterface; // GIS interface
     QAction * m_action; // Action in the menu bar
 
     QgsMapToolEmitPoint * mpMapTool ;
+    double x=-1;
+    double y=-1;
 };
 
 #endif

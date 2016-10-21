@@ -49,9 +49,24 @@ void AgilePlugin::initGui()
 
 void AgilePlugin::onClicked(const QgsPoint &point, Qt::MouseButton button)
 {
-    double x = point.x();
-    double y = point.y();
-QgsMessageLog::instance()->logMessage(QString::number(x)+ " " + QString::number(y), "AgilePlugin", QgsMessageLog::INFO);
+    if((x==point.x())&&(y==point.y()))
+    {
+        x=point.x();
+        y=point.y();
+        QgsMessageLog::instance()->logMessage("on cree un point", "AgilePlugin", QgsMessageLog::INFO);
+
+        // on creer un point
+        x= -1;
+        y= -1;
+    }
+    else
+    {
+        x = point.x();
+        y = point.y();
+        QgsMessageLog::instance()->logMessage(QString::number(x)+ " " + QString::number(y), "AgilePlugin", QgsMessageLog::INFO);
+    }
+
+
 }
 
 void AgilePlugin::run()
