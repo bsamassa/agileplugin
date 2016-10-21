@@ -6,7 +6,7 @@
 #include "qgsmaplayerregistry.h"
 #include <QAction>
 #include <QList>
-#include "Qgis_tools.h"
+//#include "Qgis_tools.h"
 #include <QFileDialog>
 #include <QFileInfo>
 #include <qgsvectorlayer.h>

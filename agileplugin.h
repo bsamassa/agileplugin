@@ -5,7 +5,7 @@
 #include <iostream>
 #include "qgisplugin.h" // Plugin interface
 
-#include "Qgis_tools.h"
+//#include "Qgis_tools.h"
 #include "qgsmaptoolemitpoint.h"
 
 // Forward declarations
